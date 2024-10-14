@@ -1,5 +1,6 @@
 package abstracted;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import utilities.StateManagement;
 import java.util.List;
@@ -13,8 +14,9 @@ public abstract class Entity extends StatefulObject {
     private List<String> inventory;
 
 
-    public Entity(String fileName, boolean locked) {
-        super(fileName, locked);
+    public Entity(String fileName) {
+        super(fileName, "Entity");
+        this.loadJson();
     }
 
     public List<String> getInventory() {
@@ -80,13 +82,16 @@ public abstract class Entity extends StatefulObject {
     public void loadJson(){
         JSONObject fileData = StateManagement.readJson(getFileName());
 
-        setName(fileData.getString("name"));
-        setHealth(fileData.getInt("health"));
-        setLocation(fileData.getString("location"));
-        setMoney(fileData.getInt("money"));
-        setWeapon(fileData.getString("weapon"));
-
-        setInventory(StateManagement.convertJsonArray(fileData.getJSONArray("inventory")));
+        try {
+            setName(fileData.getString("name"));
+            setHealth(fileData.getInt("health"));
+            setLocation(fileData.getString("location"));
+            setMoney(fileData.getInt("money"));
+            setWeapon(fileData.getString("weapon"));
+            setInventory(StateManagement.convertJsonArray(fileData.getJSONArray("inventory")));
+        } catch (JSONException e) {
+            throw new RuntimeException("Incorrect attributes in supplied JSON!");
+        }
     }
 
     public void attack(){

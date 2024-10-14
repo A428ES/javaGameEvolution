@@ -1,13 +1,19 @@
+import classes.Player;
 import classes.Weapon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class main{
     public static void main(String[] args){
-        Weapon lightsaberSingle = new Weapon("lightsaber.json", false);
-        lightsaberSingle.setValue(99999);
-        lightsaberSingle.saveJson();
+        Player playerOne = new Player("player1");
 
-        Weapon newSabre = new Weapon("lightsaber.json", false);
+        List<String> list = new ArrayList<>();
+        list.add("lightsaber");
+        playerOne.setInventory(list);
+        playerOne.saveJson();
 
-        System.out.println(newSabre.getValue());
+        Player playerTwo = new Player("player1");
+        System.out.println(playerTwo.getInventory().toString());
     }
 }

@@ -6,9 +6,9 @@ public abstract class StatefulObject {
     private String description;
     boolean locked;
 
-    public StatefulObject(String fileName, boolean locked) {
-        this.fileName = fileName;
-        this.locked = locked;
+    public StatefulObject(String fileName, String fileType) {
+        this.fileName = "C:\\JavaTextGame" + fileType + "\\" + fileName + ".json";
+        this.locked = false;
     }
 
     public String getFileName() {

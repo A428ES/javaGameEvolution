@@ -1,5 +1,6 @@
 package abstracted;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import utilities.StateManagement;
 
@@ -10,8 +11,8 @@ public abstract class Item extends StatefulObject{
     private int modifier;
     private String description;
 
-    public Item(String fileName, boolean locked) {
-        super("C:\\Items\\" + fileName, locked);
+    public Item(String fileName) {
+        super(fileName, "Item");
         this.loadJson();
     }
 
@@ -69,11 +70,15 @@ public abstract class Item extends StatefulObject{
     public void loadJson(){
         JSONObject fileData = StateManagement.readJson(getFileName());
 
-        setName(fileData.getString("name"));
-        setModifier(fileData.getInt("modifier"));
-        setDescription(fileData.getString("description"));
-        setValue(fileData.getInt("value"));
-        setCondition(fileData.getInt("condition"));
+        try{
+            setName(fileData.getString("name"));
+            setModifier(fileData.getInt("modifier"));
+            setDescription(fileData.getString("description"));
+            setValue(fileData.getInt("value"));
+            setCondition(fileData.getInt("condition"));
+        } catch (JSONException e) {
+            throw new RuntimeException("Incorrect attributes in supplied JSON!");
+        }
     }
 
     public abstract void adjustCondition();
