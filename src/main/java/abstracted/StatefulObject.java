@@ -1,4 +1,4 @@
-package src.main.abstracted;
+package abstracted;
 
 public abstract class StatefulObject {
     private final String fileName;
@@ -15,13 +15,6 @@ public abstract class StatefulObject {
         return fileName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
     public boolean isLocked() {
         return locked;
@@ -31,11 +24,6 @@ public abstract class StatefulObject {
         this.locked = locked;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    public abstract void loadJson();
+    public abstract void saveJson();
 }
