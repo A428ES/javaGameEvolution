@@ -1,19 +1,22 @@
-import classes.Player;
-import classes.Weapon;
+import classes.Output.GameOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static classes.Output.GameOutput.OutputType.DESCRIPTION;
+
 public class main{
     public static void main(String[] args){
-        Player playerOne = new Player("player1");
+        GameOutput gameOutput = new GameOutput();
 
-        List<String> list = new ArrayList<>();
-        list.add("lightsaber");
-        playerOne.setInventory(list);
-        playerOne.saveJson();
+        List<String> loadMenu = new ArrayList<String>();
+        loadMenu.add("New Game");
+        loadMenu.add("Load Game");
+        loadMenu.add("Credits");
+        loadMenu.add("Exit");
 
-        Player playerTwo = new Player("player1");
-        System.out.println(playerTwo.getInventory().toString());
+        gameOutput.outputText(DESCRIPTION, "Please make a Game Menu selection");
+        gameOutput.outputText(loadMenu);
+
     }
 }

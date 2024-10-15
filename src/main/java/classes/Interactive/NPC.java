@@ -1,9 +1,9 @@
-package classes;
+package classes.Interactive;
 
 import abstracted.Entity;
 
-public class Player extends Entity {
-    public Player(String fileName) {
+public class NPC extends Entity {
+    public NPC(String fileName) {
         super(fileName);
     }
 
