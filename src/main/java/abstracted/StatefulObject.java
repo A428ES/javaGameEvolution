@@ -9,7 +9,7 @@ public abstract class StatefulObject  {
     private final StateManagement stateManagement;
 
     public StatefulObject(String fileName, String fileType, StateManagement stateManagement) {
-        this.fileName = "C:\\JavaTextGame" + fileType + "\\" + fileName + ".json";
+        this.fileName = "C:\\JavaTextGame\\" + fileType + "\\" + fileName + ".json";
         this.locked = false;
         this.stateManagement = stateManagement;
     }
@@ -31,5 +31,9 @@ public abstract class StatefulObject  {
         stateManagement.write(fileName, jsonObject);
 
         this.locked = false;
+    }
+
+    public void initialize(){
+        fromJson(read());
     }
 }
