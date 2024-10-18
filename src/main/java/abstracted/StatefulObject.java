@@ -1,29 +1,35 @@
 package abstracted;
 
-public abstract class StatefulObject {
-    private final String fileName;
-    private String name;
-    private String description;
-    boolean locked;
+import org.json.JSONObject;
+import interfaces.StateManagement;
 
-    public StatefulObject(String fileName, String fileType) {
+public abstract class StatefulObject  {
+    private final String fileName;
+    private boolean locked;
+    private final StateManagement stateManagement;
+
+    public StatefulObject(String fileName, String fileType, StateManagement stateManagement) {
         this.fileName = "C:\\JavaTextGame" + fileType + "\\" + fileName + ".json";
         this.locked = false;
+        this.stateManagement = stateManagement;
     }
-
-    public String getFileName() {
-        return fileName;
-    }
-
 
     public boolean isLocked() {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public abstract JSONObject toJson();
+    public abstract void fromJson(JSONObject fileData);
+
+    public JSONObject read(){
+        return stateManagement.read(fileName);
     }
 
-    public abstract void loadJson();
-    public abstract void saveJson();
+    public void write(JSONObject jsonObject) {
+        this.locked = true;
+
+        stateManagement.write(fileName, jsonObject);
+
+        this.locked = false;
+    }
 }

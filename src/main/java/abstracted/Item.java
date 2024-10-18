@@ -2,7 +2,7 @@ package abstracted;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import utilities.StateManagement;
+import interfaces.StateManagement;
 
 public abstract class Item extends StatefulObject{
     private String name;
@@ -11,9 +11,8 @@ public abstract class Item extends StatefulObject{
     private int modifier;
     private String description;
 
-    public Item(String fileName) {
-        super(fileName, "Item");
-        this.loadJson();
+    public Item(String fileName, StateManagement stateManagement) {
+        super(fileName, "Item", stateManagement);
     }
 
     public String getName() {
@@ -36,27 +35,8 @@ public abstract class Item extends StatefulObject{
         return description;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
 
-    public void setCondition(int condition) {
-        this.condition = condition;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setModifier(int modifier) {
-        this.modifier = modifier;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void saveJson(){
+    public JSONObject toJson(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", getName());
         jsonObject.put("value", getValue());
@@ -64,18 +44,16 @@ public abstract class Item extends StatefulObject{
         jsonObject.put("description", getDescription());
         jsonObject.put("modifier", getModifier());
 
-        StateManagement.writeJson(getFileName(), jsonObject);
+        return jsonObject;
     }
 
-    public void loadJson(){
-        JSONObject fileData = StateManagement.readJson(getFileName());
-
+    public void fromJson(JSONObject fileData){
         try{
-            setName(fileData.getString("name"));
-            setModifier(fileData.getInt("modifier"));
-            setDescription(fileData.getString("description"));
-            setValue(fileData.getInt("value"));
-            setCondition(fileData.getInt("condition"));
+            name = fileData.getString("name");
+            modifier = fileData.getInt("modifier");
+            description = fileData.getString("description");
+            value = fileData.getInt("value");
+            condition = fileData.getInt("condition");
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }

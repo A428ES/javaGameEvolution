@@ -1,10 +1,6 @@
 package classes.Output;
-
 import abstracted.Output;
-
 import java.util.List;
-
-
 
 public class GameOutput implements Output {
 

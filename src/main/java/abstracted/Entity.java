@@ -2,7 +2,7 @@ package abstracted;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import utilities.StateManagement;
+import interfaces.StateManagement;
 import java.util.List;
 
 public abstract class Entity extends StatefulObject {
@@ -14,9 +14,8 @@ public abstract class Entity extends StatefulObject {
     private List<String> inventory;
 
 
-    public Entity(String fileName) {
-        super(fileName, "Entity");
-        this.loadJson();
+    public Entity(String fileName, StateManagement stateManagement) {
+        super(fileName, "Entity", stateManagement);
     }
 
     public List<String> getInventory() {
@@ -67,7 +66,7 @@ public abstract class Entity extends StatefulObject {
         this.location = location;
     }
 
-    public void saveJson(){
+    public JSONObject toJson(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", getName());
         jsonObject.put("health", getHealth());
@@ -76,19 +75,17 @@ public abstract class Entity extends StatefulObject {
         jsonObject.put("inventory", getInventory());
         jsonObject.put("money", getMoney());
 
-        StateManagement.writeJson(getFileName(), jsonObject);
+        return jsonObject;
     }
 
-    public void loadJson(){
-        JSONObject fileData = StateManagement.readJson(getFileName());
-
+    public void fromJson(JSONObject fileData){
         try {
-            setName(fileData.getString("name"));
-            setHealth(fileData.getInt("health"));
-            setLocation(fileData.getString("location"));
-            setMoney(fileData.getInt("money"));
-            setWeapon(fileData.getString("weapon"));
-            setInventory(StateManagement.convertJsonArray(fileData.getJSONArray("inventory")));
+            name = fileData.getString("name");
+            health = fileData.getInt("health");
+            location = fileData.getString("location");
+            money = fileData.getInt("money");
+            weapon = fileData.getString("weapon");
+            //setInventory(StateManagement.convertJsonArray(fileData.getJSONArray("inventory")));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }

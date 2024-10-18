@@ -1,8 +1,8 @@
 package abstracted;
 
+import interfaces.StateManagement;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utilities.StateManagement;
 
 import java.util.List;
 
@@ -13,71 +13,44 @@ public abstract class Location extends StatefulObject {
     private String previousLocation;
     private List<String> npcList;
 
-    public Location(String fileName) {
-        super(fileName, "Location");
+    public Location(String fileName, StateManagement stateManagement) {
+        super(fileName, "Location", stateManagement);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getNextLocation() {
         return nextLocation;
     }
 
-    public void setNextLocation(String nextLocation) {
-        this.nextLocation = nextLocation;
-    }
-
     public String getPreviousLocation() {
         return previousLocation;
     }
 
-    public void setPreviousLocation(String previousLocation) {
-        this.previousLocation = previousLocation;
-    }
-
-    public List<String> getNpcList() {
-        return npcList;
-    }
-
-    public void setNpcList(List<String> npcList) {
-        this.npcList = npcList;
-    }
-
-    public void saveJson(){
+    public JSONObject toJson(){
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", getName());
-        jsonObject.put("description", getDescription());
-        jsonObject.put("nextLocation", getNextLocation());
-        jsonObject.put("previousLocation", getPreviousLocation());
-        jsonObject.put("npcList", getNpcList());
+        jsonObject.put("name", name);
+        jsonObject.put("description", description);
+        jsonObject.put("nextLocation", nextLocation);
+        jsonObject.put("previousLocation", previousLocation);
+        jsonObject.put("npcList", npcList);
 
-        StateManagement.writeJson(getFileName(), jsonObject);
+        return jsonObject;
     }
 
-    public void loadJson(){
-        JSONObject fileData = StateManagement.readJson(getFileName());
-
+    public void fromJson(JSONObject fileData){
         try {
-            setName(fileData.getString("name"));
-            setDescription(fileData.getString("description"));
-            setNextLocation(fileData.getString("nextLocation"));
-            setPreviousLocation(fileData.getString("previousLocation"));
-
-            setNpcList(StateManagement.convertJsonArray(fileData.getJSONArray("npcList")));
+            name = fileData.getString("name");
+            description = fileData.getString("description");
+            nextLocation = fileData.getString("nextLocation");
+            previousLocation = fileData.getString("previousLocation");
+            //npcList = StateManagement.convertJsonArray(fileData.getJSONArray("npcList"));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }
