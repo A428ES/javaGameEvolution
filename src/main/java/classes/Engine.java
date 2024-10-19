@@ -1,10 +1,11 @@
 package classes;
 
 import classes.Interactive.Player;
+import classes.Items.Weapon;
 import classes.Output.GameOutput;
+import classes.Output.ItemOutput;
 import interfaces.StateManagement;
 
-import static classes.Output.GameOutput.OutputType.DESCRIPTION;
 import static classes.StateManagementFactory.StateTypes;
 
 public class Engine {
@@ -13,13 +14,17 @@ public class Engine {
 
     public Engine(StateTypes stateType) {
         this.stateManagement = new StateManagementFactory().generateState(stateType);
-        gameOutput = new GameOutput();
+        this.gameOutput = new GameOutput();
     }
 
     public void testRun(){
         Player playerOne = new Player("player1", stateManagement);
+        Weapon lightSword = new Weapon("lightsaber", stateManagement);
+        lightSword.initialize();
         playerOne.initialize();
-        gameOutput.outputText(DESCRIPTION, playerOne.getName());
+
+        gameOutput.setOutput(new ItemOutput());
+        gameOutput.display(lightSword.getOutputPayload());
     }
 
 }

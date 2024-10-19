@@ -3,10 +3,15 @@ package abstracted;
 import org.json.JSONObject;
 import interfaces.StateManagement;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public abstract class StatefulObject  {
     private final String fileName;
-    private boolean locked;
     private final StateManagement stateManagement;
+    private Map<String, String> outputPayload;
+    private boolean locked;
 
     public StatefulObject(String fileName, String fileType, StateManagement stateManagement) {
         this.fileName = "C:\\JavaTextGame\\" + fileType + "\\" + fileName + ".json";
@@ -16,6 +21,10 @@ public abstract class StatefulObject  {
 
     public boolean isLocked() {
         return locked;
+    }
+
+    public Map<String, String> getOutputPayload() {
+        return outputPayload;
     }
 
     public abstract JSONObject toJson();
@@ -33,7 +42,21 @@ public abstract class StatefulObject  {
         this.locked = false;
     }
 
+    private void setOutputPayload(){
+        Map<String, String> hashMapOutput = new HashMap<String, String>();
+        JSONObject jsonObject = toJson();
+        Iterator<String> keys = jsonObject.keys();
+
+        while(keys.hasNext()) {
+            String key = keys.next();
+            hashMapOutput.put(key, jsonObject.get(key).toString());
+        }
+
+        outputPayload = hashMapOutput;
+    }
+
     public void initialize(){
         fromJson(read());
+        setOutputPayload();
     }
 }

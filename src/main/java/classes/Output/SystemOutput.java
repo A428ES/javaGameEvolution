@@ -1,4 +1,4 @@
 package classes.Output;
 
-public class SystemOutput {
+public class SystemOutput extends GameOutput{
 }

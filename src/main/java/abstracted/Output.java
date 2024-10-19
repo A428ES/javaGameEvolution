@@ -1,10 +1,18 @@
 package abstracted;
 
-import classes.Output.GameOutput;
+import java.util.Map;
 
-import java.util.List;
+public abstract class Output {
+    public String kvLineFeed(String value, String key){
+        return String.format("[%s: %s]\n", key, value);
+    }
+    public String segmentedFeed(String printPayload){
+        return String.format(">>>>>>>>>\n%s\n<<<<<<<<<", printPayload);
+    }
 
-public interface Output {
-    public abstract void outputText(GameOutput.OutputType actionType, String payLoad);
-    public abstract void outputText(List<String> menuOptions);
+    public void gameOutput(String outputFeed){
+        System.out.print(outputFeed);
+    }
+
+    public abstract void display(Map<String, String> data);
 }
