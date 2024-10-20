@@ -1,5 +1,6 @@
-package classes;
+package classes.Factory;
 
+import classes.JsonStateManagement;
 import interfaces.StateManagement;
 
 public class StateManagementFactory {

@@ -1,13 +1,13 @@
 package classes;
 
-import abstracted.Event;
+import classes.Factory.StateManagementFactory;
 import classes.Output.GameOutput;
 import interfaces.StateManagement;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static classes.StateManagementFactory.StateTypes;
+import static classes.Factory.StateManagementFactory.StateTypes;
 
 public class Engine {
     private boolean gameRunning = true;
@@ -27,7 +27,7 @@ public class Engine {
     }
 
     public void eventIntegration(){
-        eventManager.getCurrentEvent().ev
+        eventManager.loadEvent(eventManager.playEvent());
     }
 
     public void engineLoop(){

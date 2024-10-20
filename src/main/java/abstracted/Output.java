@@ -7,14 +7,18 @@ public abstract class Output {
         return String.format("[%s: %s]\n", key, value);
     }
     public String segmentedFeed(String printPayload){
-        return String.format(">>>>>>>>>\n%s\n<<<<<<<<<", printPayload);
+        return String.format("\n>>>>>>>>>\n%s\n<<<<<<<<<\n", printPayload);
     }
 
     public void display(String outputFeed){
-        System.out.print(outputFeed);
+        System.out.print(segmentedFeed(outputFeed));
     }
 
     public void display(Map<String, String> data){
+
+    }
+
+    public void display(String desc, String options){
 
     }
 }

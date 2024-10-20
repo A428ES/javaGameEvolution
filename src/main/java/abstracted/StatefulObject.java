@@ -18,6 +18,7 @@ public abstract class StatefulObject  {
         this.fileName = "C:\\JavaTextGame\\" + fileType + "\\" + fileName + ".json";
         this.locked = false;
         this.stateManagement = stateManagement;
+        this.initialize();
     }
 
     public boolean isLocked() {

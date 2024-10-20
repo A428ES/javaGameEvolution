@@ -13,9 +13,22 @@ public abstract class Event extends StatefulObject {
     private List<String> inputOptions;
     private Output outputManager;
     private Input inputManager;
+    private StatefulObject eventTarget;
 
-    public Event(String fileName, String type, StateManagement stateManagement) {
-        super(fileName, type, stateManagement);
+    public void loadTarget(StatefulObject eventTarget){
+        this.eventTarget = eventTarget;
+    }
+
+    public Input getInputManager() {
+        return inputManager;
+    }
+
+    public Output getOutputManager() {
+        return outputManager;
+    }
+
+    public Event(String fileName, StateManagement stateManagement) {
+        super(fileName, "Event", stateManagement);
     }
 
     public String getEventText() {
@@ -43,7 +56,7 @@ public abstract class Event extends StatefulObject {
         try{
             name = fileData.getString("name");
             eventText = fileData.getString("eventText");
-            inputOptions = JsonHelper.convertJsonArray(fileData.getJSONArray("inputText"));
+            inputOptions = JsonHelper.convertJsonArray(fileData.getJSONArray("inputOptions"));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }
