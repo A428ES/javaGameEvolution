@@ -4,14 +4,10 @@ import abstracted.Output;
 
 import java.util.Map;
 
-public class GameOutput {
+public class GameOutput extends Output {
     private Output output;
 
     public void setOutput(Output output) {
         this.output = output;
-    }
-
-    public void display(Map<String, String> data) {
-        output.display(data);  // Dynamically handle different output types
     }
 }

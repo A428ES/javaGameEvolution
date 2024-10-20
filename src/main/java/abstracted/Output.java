@@ -10,9 +10,11 @@ public abstract class Output {
         return String.format(">>>>>>>>>\n%s\n<<<<<<<<<", printPayload);
     }
 
-    public void gameOutput(String outputFeed){
+    public void display(String outputFeed){
         System.out.print(outputFeed);
     }
 
-    public abstract void display(Map<String, String> data);
+    public void display(Map<String, String> data){
+
+    }
 }

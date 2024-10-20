@@ -1,30 +1,40 @@
 package classes;
 
-import classes.Interactive.Player;
-import classes.Items.Weapon;
+import abstracted.Event;
 import classes.Output.GameOutput;
-import classes.Output.ItemOutput;
 import interfaces.StateManagement;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static classes.StateManagementFactory.StateTypes;
 
 public class Engine {
-    private final StateManagement stateManagement;
-    private final GameOutput gameOutput;
+    private boolean gameRunning = true;
+    private EventManager eventManager;
 
     public Engine(StateTypes stateType) {
-        this.stateManagement = new StateManagementFactory().generateState(stateType);
-        this.gameOutput = new GameOutput();
+        StateManagement stateManagement = new StateManagementFactory().generateState(stateType);
+        GameOutput gameOutput = new GameOutput();
+        eventManager = new EventManager(stateManagement);
+
+        Map<String, String> firstEvent = new HashMap<String, String>();
+
+        firstEvent.put("nextEvent", "LocationEvent");
+        firstEvent.put("eventTarget", "deathstar");
+
+        eventManager.loadEvent(firstEvent);
     }
 
-    public void testRun(){
-        Player playerOne = new Player("player1", stateManagement);
-        Weapon lightSword = new Weapon("lightsaber", stateManagement);
-        lightSword.initialize();
-        playerOne.initialize();
+    public void eventIntegration(){
+        eventManager.getCurrentEvent().ev
+    }
 
-        gameOutput.setOutput(new ItemOutput());
-        gameOutput.display(lightSword.getOutputPayload());
+    public void engineLoop(){
+
+        while(gameRunning){
+            eventIntegration();
+        }
     }
 
 }

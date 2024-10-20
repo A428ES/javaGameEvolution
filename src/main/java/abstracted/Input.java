@@ -1,7 +1,11 @@
 package abstracted;
 
-public abstract class Input {
-    public void scanInput(){}
+public class Input {
+    public boolean validationRules(String inputToValidate){
+        return true;
+    }
 
-    public abstract void validationRules();
+    public String getInput(){
+        return "<test>";
+    }
 }

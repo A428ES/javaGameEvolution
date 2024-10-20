@@ -20,6 +20,6 @@ public class ItemOutput extends Output {
         String itemDescOutput = String.format("[The {%s}: %s]\n\n", item.get("name"), item.get("description"));
         String itemPayload = fieldPayload(item, Arrays.asList("value", "condition", "modifier"));
 
-        gameOutput(segmentedFeed(itemDescOutput + itemPayload));
+        display(segmentedFeed(itemDescOutput + itemPayload));
     }
 }

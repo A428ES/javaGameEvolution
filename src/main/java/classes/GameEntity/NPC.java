@@ -1,10 +1,10 @@
-package classes.Interactive;
+package classes.GameEntity;
 
 import abstracted.Entity;
 import interfaces.StateManagement;
 
-public class Player extends Entity {
-    public Player(String fileName, StateManagement stateManagement) {
+public class NPC extends Entity {
+    public NPC(String fileName, StateManagement stateManagement) {
         super(fileName, stateManagement);
     }
 

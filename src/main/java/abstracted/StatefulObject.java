@@ -10,6 +10,7 @@ import java.util.Map;
 public abstract class StatefulObject  {
     private final String fileName;
     private final StateManagement stateManagement;
+    private Map<String, String> dependencyList;
     private Map<String, String> outputPayload;
     private boolean locked;
 
