@@ -6,7 +6,6 @@ import abstracted.LocationChoices;
 import classes.EventInstructions;
 import exception.InvalidChoiceException;
 import interfaces.StateManagement;
-import static abstracted.LocationChoices.*;
 
 import static abstracted.StatefulObjectTypes.LOCATION;
 
@@ -43,7 +42,7 @@ public class LocationEvent extends Event {
             throw new InvalidChoiceException("Invalid Location action selected");
         }
 
-        if(!getInputManager().validationRules(inputPayload)){
+        if(getInputManager().validationRules(inputPayload)){
             throw new IllegalArgumentException("Provided input does not meet validation rules for event type");
         }
     }

@@ -6,8 +6,6 @@ import abstracted.StatefulObjectTypes;
 import classes.EventInstructions;
 import interfaces.StateManagement;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class ItemEvent extends Event {
     public EventInstructions eventOutcome(){

@@ -7,8 +7,6 @@ import exception.InvalidChoiceException;
 import exception.MissingResource;
 import interfaces.StateManagement;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import static classes.Factory.StateManagementFactory.StateTypes;
 
@@ -16,6 +14,14 @@ public class Engine {
     private boolean gameRunning = true;
     private final EventManager eventManager;
     private final SystemOutput sysOutput;
+
+    public boolean isGameRunning() {
+        return gameRunning;
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        this.gameRunning = gameRunning;
+    }
 
     public Engine(StateTypes stateType) {
         StateManagement stateManagement = new StateManagementFactory().generateState(stateType);
@@ -40,12 +46,14 @@ public class Engine {
             resetEvent("You made an invalid selection!");
         } catch (MissingResource e){
             resetEvent("System resource not found!");
+        } catch (RuntimeException e){
+            setGameRunning(false);
         }
     }
 
     public void engineLoop(){
 
-        while(gameRunning){
+        while(isGameRunning()){
             eventIntegration();
         }
     }

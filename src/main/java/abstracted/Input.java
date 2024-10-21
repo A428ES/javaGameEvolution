@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Input {
     public boolean validationRules(String inputToValidate){
-        return true;
+        return inputToValidate.equals("true");
     }
 
     public String getInput(){

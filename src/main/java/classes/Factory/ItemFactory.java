@@ -1,6 +1,5 @@
 package classes.Factory;
 
-import abstracted.Entity;
 import abstracted.Item;
 import abstracted.StatefulObjectTypes;
 import classes.Items.Armor;

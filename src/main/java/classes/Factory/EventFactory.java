@@ -1,6 +1,5 @@
 package classes.Factory;
 
-import abstracted.Entity;
 import abstracted.Event;
 import abstracted.StatefulObjectTypes;
 import classes.Events.BattleEvent;

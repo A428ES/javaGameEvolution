@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import utilities.JsonHelper;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Event extends StatefulObject {
     private String name;

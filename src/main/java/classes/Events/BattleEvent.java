@@ -5,8 +5,6 @@ import abstracted.Event;
 import classes.EventInstructions;
 import classes.GameEntity.Player;
 import interfaces.StateManagement;
-import java.util.HashMap;
-import java.util.Map;
 
 import static abstracted.StatefulObjectTypes.LOCATION;
 
@@ -46,7 +44,7 @@ public class BattleEvent extends Event {
     public void beginInputEvent() {
         inputPayload = getInputManager().getInput();
 
-        if (!getInputManager().validationRules(inputPayload)) {
+        if (getInputManager().validationRules(inputPayload)) {
             throw new IllegalArgumentException("Provided input does not meet validation rules for event type");
         }
     }
