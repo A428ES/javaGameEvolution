@@ -3,9 +3,7 @@ package abstracted;
 import org.json.JSONObject;
 import interfaces.StateManagement;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public abstract class StatefulObject  {
     private final String fileName;

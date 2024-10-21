@@ -11,8 +11,12 @@ public abstract class Entity extends StatefulObject {
     private int money;
     private String weapon;
     private String location;
+    private String lastLocation;
     private List<String> inventory;
 
+    public String getLastLocation() {
+        return lastLocation;
+    }
 
     public Entity(String fileName, StateManagement stateManagement) {
         super(fileName, "Entity", stateManagement);
@@ -50,6 +54,7 @@ public abstract class Entity extends StatefulObject {
         jsonObject.put("location", getLocation());
         jsonObject.put("inventory", getInventory());
         jsonObject.put("money", getMoney());
+        jsonObject.put("lastLocation", getLastLocation());
 
         return jsonObject;
     }
@@ -61,6 +66,7 @@ public abstract class Entity extends StatefulObject {
             location = fileData.getString("location");
             money = fileData.getInt("money");
             weapon = fileData.getString("weapon");
+            lastLocation = fileData.getString("lastLocation");
             //setInventory(StateManagement.convertJsonArray(fileData.getJSONArray("inventory")));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");

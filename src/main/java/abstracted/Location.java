@@ -3,6 +3,7 @@ package abstracted;
 import interfaces.StateManagement;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utilities.JsonHelper;
 
 import java.util.List;
 
@@ -23,6 +24,10 @@ public abstract class Location extends StatefulObject {
 
     public String getDescription() {
         return description;
+    }
+
+    public List<String> getNpcList() {
+        return npcList;
     }
 
     public String getNextLocation() {
@@ -50,7 +55,7 @@ public abstract class Location extends StatefulObject {
             description = fileData.getString("description");
             nextLocation = fileData.getString("nextLocation");
             previousLocation = fileData.getString("previousLocation");
-            //npcList = StateManagement.convertJsonArray(fileData.getJSONArray("npcList"));
+            npcList = JsonHelper.convertJsonArray(fileData.getJSONArray("npcList"));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }

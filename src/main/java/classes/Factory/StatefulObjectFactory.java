@@ -1,10 +1,7 @@
 package classes.Factory;
 
-import abstracted.StatefulObject;
-import abstracted.StatefulObjectTypes;
+import abstracted.*;
 import interfaces.StateManagement;
-
-import static abstracted.StatefulObjectTypes.*;
 
 public abstract class StatefulObjectFactory {
     public static StatefulObjectFactory generateFactory(StatefulObjectTypes objectType){
@@ -22,5 +19,19 @@ public abstract class StatefulObjectFactory {
         }
     }
 
-    public abstract StatefulObject generate(StatefulObjectTypes eventType, String name, StateManagement stateManagement);
+    public Location generateLocation(StatefulObjectTypes eventType, String name, StateManagement stateManagement) {
+        throw new UnsupportedOperationException("generateLocation not implemented");
+    }
+
+    public Item generateItem(StatefulObjectTypes eventType, String name, StateManagement stateManagement) {
+        throw new UnsupportedOperationException("generateItem not implemented");
+    }
+
+    public Event generateEvent(StatefulObjectTypes eventType, String name, StateManagement stateManagement) {
+        throw new UnsupportedOperationException("generateEvent not implemented");
+    }
+
+    public Entity generateEntity(StatefulObjectTypes eventType, String name, StateManagement stateManagement) {
+        throw new UnsupportedOperationException("generateEntity not implemented");
+    }
 }

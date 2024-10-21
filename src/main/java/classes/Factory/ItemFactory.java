@@ -1,12 +1,12 @@
 package classes.Factory;
 
+import abstracted.Entity;
 import abstracted.Item;
 import abstracted.StatefulObjectTypes;
 import classes.Items.Armor;
 import classes.Items.Medicine;
 import classes.Items.Weapon;
 import interfaces.StateManagement;
-import static abstracted.StatefulObjectTypes.*;
 
 public class ItemFactory extends StatefulObjectFactory {
     public Item generate(StatefulObjectTypes itemType, String name, StateManagement stateManagement){
