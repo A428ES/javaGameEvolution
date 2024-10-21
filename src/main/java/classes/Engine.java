@@ -1,5 +1,6 @@
 package classes;
 
+import abstracted.StatefulObjectTypes;
 import classes.Factory.StateManagementFactory;
 import classes.Output.SystemOutput;
 import exception.InvalidChoiceException;
@@ -22,12 +23,7 @@ public class Engine {
         sysOutput = new SystemOutput();
         eventManager = new EventManager(stateManagement);
 
-        Map<String, String> firstEvent = new HashMap<String, String>();
-
-        firstEvent.put("nextEvent", "LocationEvent");
-        firstEvent.put("eventTarget", "deathstar");
-
-        eventManager.loadEvent(firstEvent);
+        eventManager.loadEvent(new EventInstructions(StatefulObjectTypes.MENU, "ENGINE"));
     }
 
     public void resetEvent(String msg){
@@ -37,7 +33,7 @@ public class Engine {
 
     public void eventIntegration(){
         try {
-            Map<String, String> lastEvent = eventManager.playEvent();
+            EventInstructions lastEvent = eventManager.playEvent();
             eventManager.loadEvent(lastEvent);
             eventManager.setLastEvent(lastEvent);
         } catch(InvalidChoiceException e){

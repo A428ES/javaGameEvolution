@@ -27,7 +27,7 @@ public abstract class StatefulObjectFactory {
         throw new UnsupportedOperationException("generateItem not implemented");
     }
 
-    public Event generateEvent(StatefulObjectTypes eventType, String name, StateManagement stateManagement) {
+    public Event generateEvent(StatefulObjectTypes eventType, StateManagement stateManagement) {
         throw new UnsupportedOperationException("generateEvent not implemented");
     }
 

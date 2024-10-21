@@ -2,10 +2,13 @@ package classes.Events;
 
 import abstracted.Event;
 import abstracted.Location;
+import abstracted.LocationChoices;
+import classes.EventInstructions;
 import exception.InvalidChoiceException;
 import interfaces.StateManagement;
-import java.util.HashMap;
-import java.util.Map;
+import static abstracted.LocationChoices.*;
+
+import static abstracted.StatefulObjectTypes.LOCATION;
 
 public class LocationEvent extends Event {
     private String inputPayload;
@@ -19,8 +22,8 @@ public class LocationEvent extends Event {
         this.target = target;
     }
 
-    public LocationEvent(String fileName, StateManagement stateManagement) {
-        super(fileName, stateManagement);
+    public LocationEvent(StateManagement stateManagement) {
+        super("LocationEvent", stateManagement);
     }
 
     private String formatEventText() {
@@ -45,22 +48,21 @@ public class LocationEvent extends Event {
         }
     }
 
-    public Map<String, String> eventOutcome() {
+    public EventInstructions eventOutcome() {
         beginEvent();
         beginInputEvent();
-        Map<String, String> returnPayload = new HashMap<String, String>();
 
-        if (inputPayload.equals("west")) {
-            returnPayload.put("nextEvent", "LocationEvent");
-            returnPayload.put("eventTarget", getTarget().getNextLocation());
-        } else if (inputPayload.equals("east")){
-            returnPayload.put("nextEvent", "LocationEvent");
-            returnPayload.put("eventTarget", getTarget().getPreviousLocation());
-        } else if(getTarget().getNpcList().contains(inputPayload)){
-            returnPayload.put("nextEvent", "BattleEvent");
-            returnPayload.put("eventTarget", inputPayload);
+        switch(LocationChoices.valueOf(inputPayload)){
+            case WEST:
+                return new EventInstructions(LOCATION, getTarget().getNextLocation());
+            case EAST:
+                return new EventInstructions(LOCATION, getTarget().getPreviousLocation());
+            default:
+                if(getTarget().getNpcList().contains(inputPayload)){
+                    return new EventInstructions(LOCATION, inputPayload);
+                }
+
+                throw new InvalidChoiceException("Invalid choice");
         }
-
-        return returnPayload;
     }
 }

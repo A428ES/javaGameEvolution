@@ -13,6 +13,8 @@ public enum StatefulObjectTypes {
     ACTIVE,
     NEXT,
     PREVIOUS,
-    BATTLE
+    BATTLE,
+    MENU
 
 }
+

@@ -1,5 +1,6 @@
 package abstracted;
 
+import classes.EventInstructions;
 import classes.GameEntity.Player;
 import interfaces.StateManagement;
 import org.json.JSONException;
@@ -63,13 +64,17 @@ public abstract class Event extends StatefulObject {
         this.outputManager = outputManager;
     }
 
-    public abstract Map<String, String> eventOutcome();
+    public abstract EventInstructions eventOutcome();
 
     public void loadTarget(Location target){
         throw new UnsupportedOperationException("location load not implemented");
     }
 
     public void loadTarget(Entity target){
+        throw new UnsupportedOperationException("location load not implemented");
+    }
+
+    public void loadTarget(Event target){
         throw new UnsupportedOperationException("location load not implemented");
     }
 

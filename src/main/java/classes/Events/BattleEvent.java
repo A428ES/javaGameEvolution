@@ -2,12 +2,13 @@ package classes.Events;
 
 import abstracted.Entity;
 import abstracted.Event;
-import abstracted.Location;
-import abstracted.StatefulObject;
+import classes.EventInstructions;
 import classes.GameEntity.Player;
 import interfaces.StateManagement;
 import java.util.HashMap;
 import java.util.Map;
+
+import static abstracted.StatefulObjectTypes.LOCATION;
 
 public class BattleEvent extends Event {
     private String inputPayload;
@@ -30,8 +31,8 @@ public class BattleEvent extends Event {
         this.target = target;
     }
 
-    public BattleEvent(String fileName, StateManagement stateManagement) {
-        super(fileName, stateManagement);
+    public BattleEvent(StateManagement stateManagement) {
+        super("BattleEvent", stateManagement);
     }
 
     private String formatEventText() {
@@ -50,17 +51,15 @@ public class BattleEvent extends Event {
         }
     }
 
-    public Map<String, String> eventOutcome() {
+    public EventInstructions eventOutcome() {
         beginEvent();
         beginInputEvent();
-        Map<String, String> returnPayload = new HashMap<String, String>();
 
         if (inputPayload.equals("escape")) {
-            returnPayload.put("nextEvent", "LocationEvent");
-            returnPayload.put("eventTarget", getPlayer().getLastLocation());
+            return new EventInstructions(LOCATION, getPlayer().getLastLocation());
         }
 
-        return returnPayload;
+        throw new IllegalArgumentException("Incorrect");
     }
 }
 
