@@ -1,9 +1,10 @@
-package abstracted;
+package abstracted.GameTypes;
 
+import abstracted.StatefulObject;
 import interfaces.StateManagement;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utilities.JsonHelper;
+import utilities.FileHelper;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public abstract class Location extends StatefulObject {
             description = fileData.getString("description");
             nextLocation = fileData.getString("nextLocation");
             previousLocation = fileData.getString("previousLocation");
-            npcList = JsonHelper.convertJsonArray(fileData.getJSONArray("npcList"));
+            npcList = FileHelper.convertJsonArray(fileData.getJSONArray("npcList"));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }

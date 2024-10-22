@@ -1,6 +1,7 @@
 package classes.Factory;
 
 import classes.JsonStateManagement;
+import classes.SaveLoadManagement;
 import interfaces.StateManagement;
 
 public class StateManagementFactory {
@@ -8,12 +9,12 @@ public class StateManagementFactory {
         JSON, OTHER
     }
 
-    public StateManagement generateState(StateTypes stateType){
+    public StateManagement generateState(StateTypes stateType, SaveLoadManagement saveLoadManagement){
         StateManagement stateManagement;
 
         switch(stateType) {
             case JSON:
-                stateManagement = new JsonStateManagement();
+                stateManagement = new JsonStateManagement(saveLoadManagement);
                 break;
             case OTHER:
                 throw new UnsupportedOperationException("StateType OTHER not implemented yet");

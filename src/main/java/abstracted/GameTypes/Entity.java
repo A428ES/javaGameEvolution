@@ -1,5 +1,6 @@
-package abstracted;
+package abstracted.GameTypes;
 
+import abstracted.StatefulObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import interfaces.StateManagement;
@@ -13,6 +14,10 @@ public abstract class Entity extends StatefulObject {
     private String location;
     private String lastLocation;
     private List<String> inventory;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getLastLocation() {
         return lastLocation;

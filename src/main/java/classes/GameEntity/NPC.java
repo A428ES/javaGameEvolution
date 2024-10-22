@@ -1,6 +1,6 @@
 package classes.GameEntity;
 
-import abstracted.Entity;
+import abstracted.GameTypes.Entity;
 import interfaces.StateManagement;
 
 public class NPC extends Entity {

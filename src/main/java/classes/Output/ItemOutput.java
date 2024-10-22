@@ -1,5 +1,5 @@
 package classes.Output;
-import abstracted.Output;
+import abstracted.IO.Output;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,6 @@
 package classes.Items;
 
-import abstracted.Item;
+import abstracted.GameTypes.Item;
 import interfaces.StateManagement;
 
 public class Medicine extends Item {

@@ -1,8 +1,6 @@
 package classes.Output;
 
-import abstracted.Output;
-
-import java.util.Map;
+import abstracted.IO.Output;
 
 public class GameOutput extends Output {
     private Output output;

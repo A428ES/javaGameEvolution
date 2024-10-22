@@ -1,6 +1,10 @@
 package classes.Factory;
 
-import abstracted.*;
+import abstracted.Enum.StatefulObjectTypes;
+import abstracted.GameTypes.Entity;
+import abstracted.GameTypes.Event;
+import abstracted.GameTypes.Item;
+import abstracted.GameTypes.Location;
 import interfaces.StateManagement;
 
 public abstract class StatefulObjectFactory {

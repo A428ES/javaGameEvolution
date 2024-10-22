@@ -1,7 +1,7 @@
 package classes.Factory;
 
-import abstracted.Item;
-import abstracted.StatefulObjectTypes;
+import abstracted.GameTypes.Item;
+import abstracted.Enum.StatefulObjectTypes;
 import classes.Items.Armor;
 import classes.Items.Medicine;
 import classes.Items.Weapon;

@@ -1,5 +1,6 @@
 package abstracted;
 
+import classes.SaveLoadManagement;
 import org.json.JSONObject;
 import interfaces.StateManagement;
 
@@ -8,14 +9,20 @@ import java.util.*;
 public abstract class StatefulObject  {
     private final String fileName;
     private final StateManagement stateManagement;
-    private Map<String, String> dependencyList;
     private Map<String, String> outputPayload;
     private boolean locked;
 
     public StatefulObject(String fileName, String fileType, StateManagement stateManagement) {
-        this.fileName = "C:\\JavaTextGame\\" + fileType + "\\" + fileName + ".json";
+        SaveLoadManagement loadSaveManagement = stateManagement.getSaveLoadManagement();
+
         this.locked = false;
         this.stateManagement = stateManagement;
+
+        if(fileType.equals("Event")){
+            this.fileName = loadSaveManagement.getCoreGamePath() + "\\" + fileType + "\\" + fileName.toUpperCase() + ".json";
+        } else {
+            this.fileName = loadSaveManagement.getWorkingFilePath() + "\\" + fileType + "\\" + fileName.toUpperCase() + ".json";
+        }
         this.initialize();
     }
 
@@ -31,6 +38,7 @@ public abstract class StatefulObject  {
     public abstract void fromJson(JSONObject fileData);
 
     public JSONObject read(){
+        System.out.println(fileName);
         return stateManagement.read(fileName);
     }
 
@@ -38,12 +46,13 @@ public abstract class StatefulObject  {
         this.locked = true;
 
         stateManagement.write(fileName, jsonObject);
+        System.out.println(fileName);
 
         this.locked = false;
     }
 
     private void setOutputPayload(){
-        Map<String, String> hashMapOutput = new HashMap<String, String>();
+        Map<String, String> hashMapOutput = new HashMap<>();
         JSONObject jsonObject = toJson();
         Iterator<String> keys = jsonObject.keys();
 

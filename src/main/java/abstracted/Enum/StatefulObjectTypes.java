@@ -1,4 +1,4 @@
-package abstracted;
+package abstracted.Enum;
 
 public enum StatefulObjectTypes {
     EVENT,
@@ -14,7 +14,10 @@ public enum StatefulObjectTypes {
     NEXT,
     PREVIOUS,
     BATTLE,
-    MENU
+    MENU,
+    NEW,
+    LOAD,
+    EXIT
 
 }
 

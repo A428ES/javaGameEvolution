@@ -1,8 +1,8 @@
 package classes.Events;
 
-import abstracted.Event;
-import abstracted.Location;
-import abstracted.StatefulObjectTypes;
+import abstracted.GameTypes.Event;
+import abstracted.GameTypes.Location;
+import abstracted.Enum.StatefulObjectTypes;
 import classes.EventInstructions;
 import interfaces.StateManagement;
 

@@ -1,7 +1,7 @@
 package classes.Factory;
 
-import abstracted.Entity;
-import abstracted.StatefulObjectTypes;
+import abstracted.GameTypes.Entity;
+import abstracted.Enum.StatefulObjectTypes;
 import classes.GameEntity.NPC;
 import classes.GameEntity.Player;
 import interfaces.StateManagement;

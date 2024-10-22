@@ -1,13 +1,16 @@
 package classes;
 
-import abstracted.StatefulObjectTypes;
 import classes.Factory.StateManagementFactory;
 import classes.Output.SystemOutput;
+import exception.ExitGameException;
 import exception.InvalidChoiceException;
 import exception.MissingResource;
 import interfaces.StateManagement;
 
 
+import java.io.IOException;
+
+import static abstracted.Enum.StatefulObjectTypes.MENU;
 import static classes.Factory.StateManagementFactory.StateTypes;
 
 public class Engine {
@@ -24,16 +27,19 @@ public class Engine {
     }
 
     public Engine(StateTypes stateType) {
-        StateManagement stateManagement = new StateManagementFactory().generateState(stateType);
+        SaveLoadManagement saveLoadManagement = new SaveLoadManagement();
+        StateManagement stateManagement = new StateManagementFactory().generateState(stateType, saveLoadManagement);
 
         sysOutput = new SystemOutput();
         eventManager = new EventManager(stateManagement);
 
-        eventManager.loadEvent(new EventInstructions(StatefulObjectTypes.MENU, "ENGINE"));
+        eventManager.loadEvent(new EventInstructions(MENU, "ENGINE"));
+        eventManager.setLastEvent(new EventInstructions(MENU, "ENGINE"));
     }
 
     public void resetEvent(String msg){
         sysOutput.display(msg);
+        System.out.println(eventManager.getLastEvent());
         eventManager.loadEvent(eventManager.getLastEvent());
     }
 
@@ -46,8 +52,14 @@ public class Engine {
             resetEvent("You made an invalid selection!");
         } catch (MissingResource e){
             resetEvent("System resource not found!");
-        } catch (RuntimeException e){
+        } catch (ExitGameException e){
+            sysOutput.display("THANK YOU FOR PLAYING! Good-bye!");
+
             setGameRunning(false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e){
+            resetEvent("Invalid MENU choice");
         }
     }
 

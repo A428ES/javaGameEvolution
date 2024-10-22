@@ -10,6 +10,20 @@ import java.nio.file.Paths;
 
 
 public class JsonStateManagement implements StateManagement {
+    SaveLoadManagement saveLoadManagement;
+
+    public JsonStateManagement(SaveLoadManagement saveLoadManagement) {
+        this.saveLoadManagement = saveLoadManagement;
+    }
+
+    public SaveLoadManagement getSaveLoadManagement() {
+        return saveLoadManagement;
+    }
+
+    public void setSaveLoadManagement(SaveLoadManagement saveLoadManagement) {
+        this.saveLoadManagement = saveLoadManagement;
+    }
+
     public JSONObject read(String filePath){
 
         byte[] fileBytes = null;

@@ -1,4 +1,4 @@
-package abstracted;
+package abstracted.IO;
 
 import java.util.Scanner;
 
@@ -9,6 +9,6 @@ public class Input {
 
     public String getInput(){
         System.out.print("\nMAKE SELECTION: ");
-        return new Scanner(System.in).next();
+        return new Scanner(System.in).next().toUpperCase();
     }
 }

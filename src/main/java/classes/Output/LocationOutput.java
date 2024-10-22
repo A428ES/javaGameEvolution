@@ -1,6 +1,6 @@
 package classes.Output;
 
-import abstracted.Output;
+import abstracted.IO.Output;
 
 public class LocationOutput extends Output {
     public void display(String desc, String options){

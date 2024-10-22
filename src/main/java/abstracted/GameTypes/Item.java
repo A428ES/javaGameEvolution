@@ -1,10 +1,11 @@
-package abstracted;
+package abstracted.GameTypes;
 
+import abstracted.StatefulObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import interfaces.StateManagement;
 
-public abstract class Item extends StatefulObject{
+public abstract class Item extends StatefulObject {
     private String name;
     private int value;
     private int condition;

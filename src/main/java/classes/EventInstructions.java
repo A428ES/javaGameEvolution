@@ -1,6 +1,6 @@
 package classes;
 
-import abstracted.StatefulObjectTypes;
+import abstracted.Enum.StatefulObjectTypes;
 
 public class EventInstructions {
     StatefulObjectTypes nextEventType;

@@ -1,6 +1,6 @@
 package classes;
 
-import abstracted.Location;
+import abstracted.GameTypes.Location;
 import interfaces.StateManagement;
 
 public class ActiveLocation extends Location {

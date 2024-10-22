@@ -1,11 +1,16 @@
-package abstracted;
+package abstracted.GameTypes;
 
+import abstracted.IO.Input;
+import abstracted.IO.Output;
+import abstracted.StatefulObject;
 import classes.EventInstructions;
 import classes.GameEntity.Player;
 import interfaces.StateManagement;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utilities.JsonHelper;
+import utilities.FileHelper;
+
+import java.io.IOException;
 import java.util.List;
 
 public abstract class Event extends StatefulObject {
@@ -52,7 +57,7 @@ public abstract class Event extends StatefulObject {
         try{
             name = fileData.getString("name");
             eventText = fileData.getString("eventText");
-            inputOptions = JsonHelper.convertJsonArray(fileData.getJSONArray("inputOptions"));
+            inputOptions = FileHelper.convertJsonArray(fileData.getJSONArray("inputOptions"));
         } catch (JSONException e) {
             throw new RuntimeException("Incorrect attributes in supplied JSON!");
         }
@@ -63,7 +68,7 @@ public abstract class Event extends StatefulObject {
         this.outputManager = outputManager;
     }
 
-    public abstract EventInstructions eventOutcome();
+    public abstract EventInstructions eventOutcome() throws IOException;
 
     public void loadTarget(Location target){
         throw new UnsupportedOperationException("location load not implemented");

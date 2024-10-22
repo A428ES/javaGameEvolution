@@ -1,12 +1,15 @@
 package classes.Events;
 
-import abstracted.Entity;
-import abstracted.Event;
+import abstracted.Enum.BattleChoices;
+import abstracted.GameTypes.Entity;
+import abstracted.GameTypes.Event;
 import classes.EventInstructions;
 import classes.GameEntity.Player;
+import exception.InvalidChoiceException;
 import interfaces.StateManagement;
 
-import static abstracted.StatefulObjectTypes.LOCATION;
+import static abstracted.Enum.StatefulObjectTypes.BATTLE;
+import static abstracted.Enum.StatefulObjectTypes.LOCATION;
 
 public class BattleEvent extends Event {
     private String inputPayload;
@@ -53,11 +56,15 @@ public class BattleEvent extends Event {
         beginEvent();
         beginInputEvent();
 
-        if (inputPayload.equals("escape")) {
-            return new EventInstructions(LOCATION, getPlayer().getLastLocation());
-        }
+        switch(BattleChoices.valueOf(inputPayload)){
+            case ATTACK:
+                return new EventInstructions(BATTLE, inputPayload);
+            case ESCAPE:
+                return new EventInstructions(LOCATION, getPlayer().getLastLocation());
 
-        throw new IllegalArgumentException("Incorrect");
+            default:
+                throw new InvalidChoiceException("tst");
+        }
     }
 }
 

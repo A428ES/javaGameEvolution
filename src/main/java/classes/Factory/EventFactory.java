@@ -1,7 +1,7 @@
 package classes.Factory;
 
-import abstracted.Event;
-import abstracted.StatefulObjectTypes;
+import abstracted.GameTypes.Event;
+import abstracted.Enum.StatefulObjectTypes;
 import classes.Events.BattleEvent;
 import classes.Events.ItemEvent;
 import classes.Events.LocationEvent;

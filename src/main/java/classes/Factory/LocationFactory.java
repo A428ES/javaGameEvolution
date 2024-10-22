@@ -1,7 +1,7 @@
 package classes.Factory;
 
-import abstracted.Location;
-import abstracted.StatefulObjectTypes;
+import abstracted.GameTypes.Location;
+import abstracted.Enum.StatefulObjectTypes;
 import classes.ActiveLocation;
 import interfaces.StateManagement;
 
