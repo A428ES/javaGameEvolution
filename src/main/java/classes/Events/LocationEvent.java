@@ -13,6 +13,10 @@ public class LocationEvent extends Event {
     private String inputPayload;
     private Location target;
 
+    public LocationEvent(StateManagement stateManagement) {
+        super("LocationEvent", stateManagement);
+    }
+
     public Location getTarget() {
         return target;
     }
@@ -21,21 +25,17 @@ public class LocationEvent extends Event {
         this.target = target;
     }
 
-    public LocationEvent(StateManagement stateManagement) {
-        super("LocationEvent", stateManagement);
-    }
-
     private String formatEventText() {
         return getEventText().replace("{target}", getTarget().getName())
                 .replace("{targetDescription}", getTarget().getDescription())
                 .replace("{npcList}", getTarget().getNpcList().toString());
     }
 
-    public void beginEvent(){
+    public void outputEventFeed(){
         getOutputManager().display(formatEventText(), getInputOptions().toString());
     }
 
-    public void beginInputEvent(){
+    public void setInputPayload(){
         inputPayload = getInputManager().getInput();
 
         if(!getInputOptions().contains(inputPayload) && !getTarget().getNpcList().contains(inputPayload)){
@@ -48,8 +48,8 @@ public class LocationEvent extends Event {
     }
 
     public EventInstructions eventOutcome() {
-        beginEvent();
-        beginInputEvent();
+        outputEventFeed();
+        promptAndSetInput("");
 
         if(getTarget().getNpcList().contains(inputPayload)){
             return new EventInstructions(BATTLE, inputPayload);

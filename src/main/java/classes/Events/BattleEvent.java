@@ -40,11 +40,7 @@ public class BattleEvent extends Event {
         return getEventText().replace("{target}", getTarget().getName());
     }
 
-    public void beginEvent() {
-        getOutputManager().display(formatEventText(), getInputOptions().toString());
-    }
-
-    public void beginInputEvent() {
+    public void setInputPayload() {
         inputPayload = getInputManager().getInput();
 
         if (getInputManager().validationRules(inputPayload)) {
@@ -53,8 +49,8 @@ public class BattleEvent extends Event {
     }
 
     public EventInstructions eventOutcome() {
-        beginEvent();
-        beginInputEvent();
+        outputEventFeed();
+        promptAndSetInput("");
 
         switch(BattleChoices.valueOf(inputPayload)){
             case ATTACK:

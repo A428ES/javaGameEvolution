@@ -8,15 +8,15 @@ import interfaces.StateManagement;
 
 
 public class ItemEvent extends Event {
-    public EventInstructions eventOutcome(){
-        return new EventInstructions(StatefulObjectTypes.ITEM, "NOONE");
-    }
+    private Location target;
 
     public ItemEvent(StateManagement stateManagement) {
         super("ItemEvent", stateManagement);
     }
 
-    private Location target;
+    public void setInputPayload(){
+
+    }
 
     public Location getTarget() {
         return target;
@@ -26,4 +26,7 @@ public class ItemEvent extends Event {
         this.target = target;
     }
 
+    public EventInstructions eventOutcome(){
+        return new EventInstructions(StatefulObjectTypes.ITEM, "NOONE");
+    }
 }

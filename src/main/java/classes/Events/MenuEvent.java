@@ -4,70 +4,57 @@ import abstracted.Enum.StatefulObjectTypes;
 import abstracted.GameTypes.Event;
 import classes.EventInstructions;
 import classes.GameEntity.Player;
+import classes.SaveLoadManagement;
 import exception.ExitGameException;
 import exception.InvalidChoiceException;
 import interfaces.StateManagement;
-
 import java.io.IOException;
-
 import static abstracted.Enum.StatefulObjectTypes.LOCATION;
-import static abstracted.Enum.StatefulObjectTypes.MENU;
 
 public class MenuEvent extends Event {
-    private String inputPayload;
-    private StateManagement stateManagement;
-
-
     public MenuEvent(StateManagement stateManagement) {
         super("MenuEvent", stateManagement);
-        this.stateManagement = stateManagement;
     }
 
-    public void loadTarget(Event target) {
-    }
+    public void setInputPayload(){
+        setInputPayload(getInputManager().getInput().toUpperCase());
 
+        if(!getInputPayload().matches("[a-zA-Z0-9_]+")){
+            throw new InvalidChoiceException("Invalid input");
+        }
 
-    public void beginEvent(){
-        getOutputManager().display(getEventText(), getInputOptions().toString());
-    }
-
-    public void beginInputEvent(){
-        inputPayload = getInputManager().getInput().toUpperCase();
-
-        if(getInputManager().validationRules(inputPayload)){
+        if(getInputManager().validationRules(getInputPayload())){
             throw new IllegalArgumentException("Provided input does not meet validation rules for event type");
         }
     }
 
     public EventInstructions eventOutcome() throws IOException {
-        beginEvent();
-        beginInputEvent();
+        outputEventFeed();
+        setInputPayload();
 
-        switch(StatefulObjectTypes.valueOf(inputPayload)){
+        StateManagement stateManagement = getStateManagement();
+        SaveLoadManagement saveLoad = stateManagement.getSaveLoadManagement();
+
+        switch(StatefulObjectTypes.valueOf(getInputPayload())){
             case NEW:
-                beginInputEvent();
-                if(!inputPayload.matches("[a-zA-Z0-9_]+")){
-                    throw new InvalidChoiceException("Invalid input");
-                }
+                promptAndSetInput("ENTER NEW GAME NAME: ");
+                saveLoad.newGame(getInputPayload());
 
-                stateManagement.getSaveLoadManagement().newGame(inputPayload);
-
-                Player newPlayer = new Player(inputPayload, stateManagement);
-                newPlayer.setName(inputPayload);
+                Player newPlayer = new Player(getInputPayload(), stateManagement);
+                newPlayer.setName(getInputPayload());
                 newPlayer.write(newPlayer.toJson());
-
 
                 return new EventInstructions(LOCATION, "deathstar");
 
             case LOAD:
-                stateManagement.getSaveLoadManagement().listGames();
-                beginInputEvent();
-                stateManagement.getSaveLoadManagement().loadGame(inputPayload);
+                saveLoad.listGames();
+                promptAndSetInput("ENTER GAME TO LOAD:");
+
+                saveLoad.loadGame(getInputPayload());
                 return new EventInstructions(LOCATION, "deathstar");
             case EXIT:
                 throw new ExitGameException("closing game");
             default:
-                System.out.println("tests");
                 throw new InvalidChoiceException("Invalid");
 
         }

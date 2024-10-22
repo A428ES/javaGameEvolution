@@ -19,6 +19,25 @@ public abstract class Event extends StatefulObject {
     private List<String> inputOptions;
     private Output outputManager;
     private Input inputManager;
+    private String inputPayload;
+    private final StateManagement stateManagement;
+
+    public Event(String fileName, StateManagement stateManagement) {
+        super(fileName, "Event", stateManagement);
+        this.stateManagement = stateManagement;
+    }
+
+    public void setInputPayload(String inputPayload) {
+        this.inputPayload = inputPayload;
+    }
+
+    public String getInputPayload() {
+        return inputPayload;
+    }
+
+    public StateManagement getStateManagement() {
+        return stateManagement;
+    }
 
     public Input getInputManager() {
         return inputManager;
@@ -28,20 +47,21 @@ public abstract class Event extends StatefulObject {
         return outputManager;
     }
 
-    public Event(String fileName, StateManagement stateManagement) {
-        super(fileName, "Event", stateManagement);
-    }
-
     public String getEventText() {
         return eventText;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public List<String> getInputOptions() {
         return inputOptions;
+    }
+
+    public void promptAndSetInput(String prompt) {
+        outputManager.display(prompt);
+        setInputPayload();
+    }
+
+    public void outputEventFeed(){
+        outputManager.display(getEventText(), getInputOptions().toString());
     }
 
     public JSONObject toJson(){
@@ -69,19 +89,12 @@ public abstract class Event extends StatefulObject {
     }
 
     public abstract EventInstructions eventOutcome() throws IOException;
+    public abstract void setInputPayload();
 
-    public void loadTarget(Location target){
-        throw new UnsupportedOperationException("location load not implemented");
-    }
-
+    public void loadTarget(Location target){ throw new UnsupportedOperationException("location load not implemented"); }
     public void loadTarget(Entity target){
         throw new UnsupportedOperationException("location load not implemented");
     }
-
-    public void loadTarget(Event target){
-        throw new UnsupportedOperationException("location load not implemented");
-    }
-
     public void setPlayer(Player player){
         throw new UnsupportedOperationException("Player load not implemented");
     }
