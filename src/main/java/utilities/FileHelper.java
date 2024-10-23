@@ -1,5 +1,6 @@
 package utilities;
 
+import exception.ResourceExistsException;
 import org.json.JSONArray;
 
 import java.io.File;
@@ -27,9 +28,21 @@ public class FileHelper {
                 Path targetPath = target.resolve(source.relativize(sourcePath));
                 Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
-                System.err.println("Failed to copy: " + sourcePath + " -> " + e.getMessage());
+                throw new ResourceExistsException("resource exists");
             }
         });
+    }
+
+    public static boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                // Recursive call to delete files and subdirectories
+                deleteDirectory(file);
+            }
+        }
+        // Finally, delete the main directory
+        return directoryToBeDeleted.delete();
     }
 
     public static void listDirectories(String directoryPath) {

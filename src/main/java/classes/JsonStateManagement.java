@@ -30,6 +30,7 @@ public class JsonStateManagement implements StateManagement {
         Path path = Paths.get(filePath);
 
         if(!Files.exists(path) || !Files.isRegularFile(path)){
+            System.out.println(filePath);
             throw new MissingResource("Resource not found.");
         }
 

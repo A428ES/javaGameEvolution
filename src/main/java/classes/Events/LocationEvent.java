@@ -4,6 +4,7 @@ import abstracted.GameTypes.Event;
 import abstracted.GameTypes.Location;
 import abstracted.Enum.LocationChoices;
 import classes.EventInstructions;
+import classes.GameEntity.Player;
 import exception.InvalidChoiceException;
 import interfaces.StateManagement;
 
@@ -49,7 +50,7 @@ public class LocationEvent extends Event {
 
     public EventInstructions eventOutcome() {
         outputEventFeed();
-        promptAndSetInput("");
+        setInputPayload();
 
         if(getTarget().getNpcList().contains(inputPayload)){
             return new EventInstructions(BATTLE, inputPayload);

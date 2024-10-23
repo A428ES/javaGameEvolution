@@ -60,8 +60,8 @@ public abstract class Event extends StatefulObject {
         setInputPayload();
     }
 
-    public void outputEventFeed(){
-        outputManager.display(getEventText(), getInputOptions().toString());
+    public void outputEventFeed(String output){
+        outputManager.display(output, getInputOptions().toString());
     }
 
     public JSONObject toJson(){
@@ -99,4 +99,7 @@ public abstract class Event extends StatefulObject {
         throw new UnsupportedOperationException("Player load not implemented");
     }
 
+    public void setLocation(Location location) {
+        throw new UnsupportedOperationException("Player load not implemented");
+    }
 }

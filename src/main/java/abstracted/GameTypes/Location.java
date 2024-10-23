@@ -23,6 +23,10 @@ public abstract class Location extends StatefulObject {
         return name;
     }
 
+    public void updateNpcList(String entry){
+        npcList.remove(entry);
+    }
+
     public String getDescription() {
         return description;
     }

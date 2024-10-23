@@ -1,5 +1,6 @@
 package classes;
 
+import exception.InvalidChoiceException;
 import utilities.FileHelper;
 
 import java.io.File;
@@ -18,6 +19,16 @@ public class SaveLoadManagement {
 
     public String getWorkingFilePath() {
         return workingFilePath;
+    }
+
+    public void deleteSave(String gameToDelete){
+        if(!gameToDelete.matches("[a-zA-Z0-9_]+")){
+            throw new InvalidChoiceException("Invalid input");
+        }
+
+        FileHelper.deleteDirectory(new File(saveFilePath + "\\" + gameToDelete));
+
+        workingFilePath = null;
     }
 
     public void loadGame(String game){

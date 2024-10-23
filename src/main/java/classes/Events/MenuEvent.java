@@ -10,6 +10,7 @@ import exception.InvalidChoiceException;
 import interfaces.StateManagement;
 import java.io.IOException;
 import static abstracted.Enum.StatefulObjectTypes.LOCATION;
+import static abstracted.Enum.StatefulObjectTypes.MENU;
 
 public class MenuEvent extends Event {
     public MenuEvent(StateManagement stateManagement) {
@@ -29,34 +30,51 @@ public class MenuEvent extends Event {
     }
 
     public EventInstructions eventOutcome() throws IOException {
-        outputEventFeed();
+        outputEventFeed(getEventText());
         setInputPayload();
 
         StateManagement stateManagement = getStateManagement();
         SaveLoadManagement saveLoad = stateManagement.getSaveLoadManagement();
+        Player playerLoad;
 
         switch(StatefulObjectTypes.valueOf(getInputPayload())){
             case NEW:
                 promptAndSetInput("ENTER NEW GAME NAME: ");
                 saveLoad.newGame(getInputPayload());
 
-                Player newPlayer = new Player(getInputPayload(), stateManagement);
-                newPlayer.setName(getInputPayload());
-                newPlayer.write(newPlayer.toJson());
-
-                return new EventInstructions(LOCATION, "deathstar");
-
+                playerLoad = new Player(getInputPayload(), stateManagement);
+                playerLoad.setName(getInputPayload());
+                playerLoad.write(playerLoad.toJson());
+                break;
             case LOAD:
                 saveLoad.listGames();
                 promptAndSetInput("ENTER GAME TO LOAD:");
 
                 saveLoad.loadGame(getInputPayload());
-                return new EventInstructions(LOCATION, "deathstar");
+                playerLoad = new Player(getInputPayload(), stateManagement);
+                break;
+            case DELETE:
+                saveLoad.listGames();
+                promptAndSetInput("ENTER SAVE TO DELETE: ");
+
+                String toDelete = getInputPayload();
+                promptAndSetInput("ARE YOU SURE? (YES/NO)");
+
+                if(getInputPayload().equals("YES")) {
+                    saveLoad.deleteSave(toDelete);
+                    getOutputManager().display("GAME SAVE SUCCESSFULLY DELETED");
+                } else {
+                    getOutputManager().display("GAME SAVE DELETION CANCELLED");
+                }
+
+                return new EventInstructions(MENU, "ENGINE");
             case EXIT:
                 throw new ExitGameException("closing game");
             default:
                 throw new InvalidChoiceException("Invalid");
 
         }
+
+        return new EventInstructions(LOCATION, playerLoad.getLastLocation());
     }
 }

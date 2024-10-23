@@ -17,7 +17,7 @@ public enum StatefulObjectTypes {
     MENU,
     NEW,
     LOAD,
-    EXIT
-
+    EXIT,
+    DELETE
 }
 

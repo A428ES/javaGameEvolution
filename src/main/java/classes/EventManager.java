@@ -1,6 +1,7 @@
 package classes;
 
 import abstracted.GameTypes.Event;
+import abstracted.GameTypes.Location;
 import abstracted.IO.Input;
 import abstracted.Enum.StatefulObjectTypes;
 import classes.Events.BattleEvent;
@@ -19,15 +20,6 @@ public class EventManager {
     private Event currentEvent;
     private EventInstructions lastEvent;
     private final StateManagement stateManagement;
-    private Player player;
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 
     public EventManager(StateManagement stateManagement) {
         this.stateManagement = stateManagement;
@@ -61,6 +53,7 @@ public class EventManager {
 
                 Player player = new Player("player", stateManagement);
                 currentEvent.setPlayer(player);
+                currentEvent.setLocation(new ActiveLocation(player.getLocation(), stateManagement));
                 StatefulObjectFactory entity = StatefulObjectFactory.generateFactory(ENTITY);
                 currentEvent.loadTarget(entity.generateEntity(NPC, currentTarget, stateManagement));
 

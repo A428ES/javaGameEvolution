@@ -5,6 +5,7 @@ import classes.Output.SystemOutput;
 import exception.ExitGameException;
 import exception.InvalidChoiceException;
 import exception.MissingResource;
+import exception.ResourceExistsException;
 import interfaces.StateManagement;
 
 
@@ -56,8 +57,10 @@ public class Engine {
             sysOutput.display("THANK YOU FOR PLAYING! Good-bye!");
 
             setGameRunning(false);
+        } catch (ResourceExistsException e){
+            resetEvent("Game already exists");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            resetEvent("I messed up some other way");
         } catch (IllegalArgumentException e){
             resetEvent("Invalid MENU choice");
         }

@@ -26,6 +26,10 @@ public abstract class StatefulObject  {
         this.initialize();
     }
 
+    public StateManagement getStateManagement() {
+        return stateManagement;
+    }
+
     public boolean isLocked() {
         return locked;
     }
@@ -38,7 +42,6 @@ public abstract class StatefulObject  {
     public abstract void fromJson(JSONObject fileData);
 
     public JSONObject read(){
-        System.out.println(fileName);
         return stateManagement.read(fileName);
     }
 
@@ -46,7 +49,6 @@ public abstract class StatefulObject  {
         this.locked = true;
 
         stateManagement.write(fileName, jsonObject);
-        System.out.println(fileName);
 
         this.locked = false;
     }
