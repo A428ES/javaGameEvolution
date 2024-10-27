@@ -4,8 +4,7 @@ import abstracted.GameTypes.Item;
 import interfaces.StateManagement;
 
 public class Armor extends Item {
-    public Armor(String fileName, StateManagement stateManagement) {
-        super(fileName, stateManagement);
+    public Armor() {
     }
 
     public void adjustModifier(){

@@ -5,8 +5,7 @@ import interfaces.StateManagement;
 
 public class Medicine extends Item {
 
-    public Medicine(String fileName, StateManagement stateManagement) {
-        super(fileName, stateManagement);
+    public Medicine() {
     }
 
     public void adjustModifier(){

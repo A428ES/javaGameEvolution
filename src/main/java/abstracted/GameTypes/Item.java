@@ -1,19 +1,43 @@
 package abstracted.GameTypes;
 
-import abstracted.StatefulObject;
-import org.json.JSONException;
-import org.json.JSONObject;
-import interfaces.StateManagement;
+import classes.Items.Armor;
+import classes.Items.Medicine;
+import classes.Items.Weapon;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-public abstract class Item extends StatefulObject {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type" // This property will tell Jackson which subclass to instantiate
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Armor.class, name = "ARMOR"),
+        @JsonSubTypes.Type(value = Weapon.class, name = "WEAPON"),
+        @JsonSubTypes.Type(value = Medicine.class, name = "MEDICINE")
+})
+
+public abstract class Item {
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("value")
     private int value;
+
+    @JsonProperty("condition")
     private int condition;
+
+    @JsonProperty("modifier")
     private int modifier;
+
+    @JsonProperty("description")
     private String description;
 
-    public Item(String fileName, StateManagement stateManagement) {
-        super(fileName, "Item", stateManagement);
+    @JsonProperty("quantity")
+    private int quantity;
+
+    public Item() {
     }
 
     public String getName() {
@@ -34,30 +58,6 @@ public abstract class Item extends StatefulObject {
 
     public String getDescription() {
         return description;
-    }
-
-
-    public JSONObject toJson(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", getName());
-        jsonObject.put("value", getValue());
-        jsonObject.put("condition", getCondition());
-        jsonObject.put("description", getDescription());
-        jsonObject.put("modifier", getModifier());
-
-        return jsonObject;
-    }
-
-    public void fromJson(JSONObject fileData){
-        try{
-            name = fileData.getString("name");
-            modifier = fileData.getInt("modifier");
-            description = fileData.getString("description");
-            value = fileData.getInt("value");
-            condition = fileData.getInt("condition");
-        } catch (JSONException e) {
-            throw new RuntimeException("Incorrect attributes in supplied JSON!");
-        }
     }
 
     public abstract void adjustCondition();

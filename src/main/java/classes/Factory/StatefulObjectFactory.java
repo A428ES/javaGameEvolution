@@ -16,8 +16,8 @@ public abstract class StatefulObjectFactory {
                 return new PlayerFactory();
             case LOCATION:
                 return new LocationFactory();
-            case ITEM:
-                return new ItemFactory();
+//            case ITEM:
+//                return new ItemFactory();
             default:
                 throw new IllegalArgumentException("Invalid Factory type requested");
         }

@@ -1,73 +1,64 @@
 package abstracted;
 
 import classes.SaveLoadManagement;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.json.JSONObject;
 import interfaces.StateManagement;
 
 import java.util.*;
 
 public abstract class StatefulObject  {
+    @JsonIgnore
     private final String fileName;
+
+    @JsonIgnore
     private final StateManagement stateManagement;
-    private Map<String, String> outputPayload;
-    private boolean locked;
+
+    @JsonIgnore
+    private boolean locked = false;
 
     public StatefulObject(String fileName, String fileType, StateManagement stateManagement) {
         SaveLoadManagement loadSaveManagement = stateManagement.getSaveLoadManagement();
-
-        this.locked = false;
         this.stateManagement = stateManagement;
 
         if(fileType.equals("Event")){
-            this.fileName = loadSaveManagement.getCoreGamePath() + "\\" + fileType + "\\" + fileName.toUpperCase() + ".json";
+            this.fileName = filePathBuilder(loadSaveManagement.getCoreGamePath(), fileType, fileName);
         } else {
-            this.fileName = loadSaveManagement.getWorkingFilePath() + "\\" + fileType + "\\" + fileName.toUpperCase() + ".json";
+            this.fileName = filePathBuilder(loadSaveManagement.getWorkingFilePath(), fileType, fileName);
         }
+
         this.initialize();
     }
 
-    public StateManagement getStateManagement() {
-        return stateManagement;
+    private String filePathBuilder(String path, String type, String fileName){
+        return path + "\\" + type + "\\" + fileName.toUpperCase() + ".json";
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public boolean isLocked() {
         return locked;
     }
 
-    public Map<String, String> getOutputPayload() {
-        return outputPayload;
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
-    public abstract JSONObject toJson();
-    public abstract void fromJson(JSONObject fileData);
-
-    public JSONObject read(){
-        return stateManagement.read(fileName);
-    }
-
-    public void write(JSONObject jsonObject) {
-        this.locked = true;
-
-        stateManagement.write(fileName, jsonObject);
-
-        this.locked = false;
-    }
-
-    private void setOutputPayload(){
-        Map<String, String> hashMapOutput = new HashMap<>();
-        JSONObject jsonObject = toJson();
-        Iterator<String> keys = jsonObject.keys();
-
-        while(keys.hasNext()) {
-            String key = keys.next();
-            hashMapOutput.put(key, jsonObject.get(key).toString());
-        }
-
-        outputPayload = hashMapOutput;
+    public StateManagement getStateManagement() {
+        return stateManagement;
     }
 
     public void initialize(){
-        fromJson(read());
-        setOutputPayload();
+        load();
+    }
+
+    public void load(){
+        this.stateManagement.read(this);
+    }
+
+    public void write(){
+        this.stateManagement.write(this);
     }
 }

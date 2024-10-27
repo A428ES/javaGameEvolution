@@ -43,27 +43,4 @@ public abstract class Location extends StatefulObject {
         return previousLocation;
     }
 
-    public JSONObject toJson(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", name);
-        jsonObject.put("description", description);
-        jsonObject.put("nextLocation", nextLocation);
-        jsonObject.put("previousLocation", previousLocation);
-        jsonObject.put("npcList", npcList);
-
-        return jsonObject;
-    }
-
-    public void fromJson(JSONObject fileData){
-        try {
-            name = fileData.getString("name");
-            description = fileData.getString("description");
-            nextLocation = fileData.getString("nextLocation");
-            previousLocation = fileData.getString("previousLocation");
-            npcList = FileHelper.convertJsonArray(fileData.getJSONArray("npcList"));
-        } catch (JSONException e) {
-            throw new RuntimeException("Incorrect attributes in supplied JSON!");
-        }
-    }
-
 }

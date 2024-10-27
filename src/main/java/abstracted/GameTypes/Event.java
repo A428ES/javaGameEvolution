@@ -5,6 +5,7 @@ import abstracted.IO.Output;
 import abstracted.StatefulObject;
 import classes.EventInstructions;
 import classes.GameEntity.Player;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import interfaces.StateManagement;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +15,15 @@ import java.io.IOException;
 import java.util.List;
 
 public abstract class Event extends StatefulObject {
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("eventText")
     private String eventText;
+
+    @JsonProperty("inputOptions")
     private List<String> inputOptions;
+
     private Output outputManager;
     private Input inputManager;
     private String inputPayload;
@@ -62,25 +69,6 @@ public abstract class Event extends StatefulObject {
 
     public void outputEventFeed(String output){
         outputManager.display(output, getInputOptions().toString());
-    }
-
-    public JSONObject toJson(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", name);
-        jsonObject.put("eventText", eventText);
-        jsonObject.put("inputOptions", inputOptions);
-
-        return jsonObject;
-    }
-
-    public void fromJson(JSONObject fileData){
-        try{
-            name = fileData.getString("name");
-            eventText = fileData.getString("eventText");
-            inputOptions = FileHelper.convertJsonArray(fileData.getJSONArray("inputOptions"));
-        } catch (JSONException e) {
-            throw new RuntimeException("Incorrect attributes in supplied JSON!");
-        }
     }
 
     public void loadIOManagers(Input inputManager, Output outputManager){

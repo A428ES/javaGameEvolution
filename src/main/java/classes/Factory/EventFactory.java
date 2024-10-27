@@ -2,7 +2,7 @@ package classes.Factory;
 
 import abstracted.GameTypes.Event;
 import abstracted.Enum.StatefulObjectTypes;
-import classes.Events.BattleEvent;
+import classes.Events.EntityEvent;
 import classes.Events.ItemEvent;
 import classes.Events.LocationEvent;
 import classes.Events.MenuEvent;
@@ -15,7 +15,7 @@ public class EventFactory extends StatefulObjectFactory {
 
         switch(eventType) {
             case BATTLE:
-                event = new BattleEvent(stateManagement);
+                event = new EntityEvent(stateManagement);
                 break;
             case ITEM:
                 event = new ItemEvent(stateManagement);

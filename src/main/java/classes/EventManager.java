@@ -1,10 +1,9 @@
 package classes;
 
 import abstracted.GameTypes.Event;
-import abstracted.GameTypes.Location;
 import abstracted.IO.Input;
 import abstracted.Enum.StatefulObjectTypes;
-import classes.Events.BattleEvent;
+import classes.Events.EntityEvent;
 import classes.Events.LocationEvent;
 import classes.Events.MenuEvent;
 import classes.Factory.StatefulObjectFactory;
@@ -49,7 +48,7 @@ public class EventManager {
 
                 break;
             case BATTLE:
-                currentEvent = new BattleEvent(stateManagement);
+                currentEvent = new EntityEvent(stateManagement);
 
                 Player player = new Player("player", stateManagement);
                 currentEvent.setPlayer(player);

@@ -4,9 +4,7 @@ import abstracted.GameTypes.Item;
 import interfaces.StateManagement;
 
 public class Weapon extends Item {
-
-    public Weapon(String fileName, StateManagement stateManagement) {
-        super(fileName, stateManagement);
+    public Weapon() {
     }
 
     public void adjustCondition(){

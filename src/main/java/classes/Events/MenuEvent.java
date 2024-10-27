@@ -44,7 +44,7 @@ public class MenuEvent extends Event {
 
                 playerLoad = new Player(getInputPayload(), stateManagement);
                 playerLoad.setName(getInputPayload());
-                playerLoad.write(playerLoad.toJson());
+                playerLoad.write();
                 break;
             case LOAD:
                 saveLoad.listGames();
@@ -75,6 +75,6 @@ public class MenuEvent extends Event {
 
         }
 
-        return new EventInstructions(LOCATION, playerLoad.getLastLocation());
+        return new EventInstructions(LOCATION, playerLoad.getLocation());
     }
 }

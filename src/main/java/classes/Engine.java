@@ -40,7 +40,6 @@ public class Engine {
 
     public void resetEvent(String msg){
         sysOutput.display(msg);
-        System.out.println(eventManager.getLastEvent());
         eventManager.loadEvent(eventManager.getLastEvent());
     }
 
