@@ -20,6 +20,7 @@ public class BattleSupport {
         this.outputManager = outputManager;
         this.player = player;
         this.target = npc;
+        this.location = location;
     }
 
     public Output getOutputManager() {
