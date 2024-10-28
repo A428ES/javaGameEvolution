@@ -1,5 +1,6 @@
 package classes;
 import abstracted.StatefulObject;
+import com.fasterxml.jackson.databind.jsontype.DefaultBaseTypeLimitingValidator;
 import exception.MissingResource;
 import interfaces.StateManagement;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ public class JsonStateManagement implements StateManagement {
         File jsonFile = new File(statefulObject.getFileName());
         try{
             ObjectReader objectReader = objectMapper.readerForUpdating(statefulObject);
+
             objectReader.readValue(jsonFile);
         } catch (IOException e){
             System.err.println(e);
@@ -46,6 +48,8 @@ public class JsonStateManagement implements StateManagement {
         try {
             mapper.writeValue(new File(statefulObject.getFileName()), statefulObject);
         } catch (IOException e){
+            e.printStackTrace();;
+            System.err.println(e);
             System.err.println("Messed up");
         }
     }

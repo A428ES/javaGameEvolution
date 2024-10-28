@@ -10,8 +10,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type" // This property will tell Jackson which subclass to instantiate
+        property = "itemType" // This property will tell Jackson which subclass to instantiate
 )
+
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Armor.class, name = "ARMOR"),
         @JsonSubTypes.Type(value = Weapon.class, name = "WEAPON"),
@@ -37,7 +38,18 @@ public abstract class Item {
     @JsonProperty("quantity")
     private int quantity;
 
+    @JsonProperty("itemType")
+    private String itemType;
+
     public Item() {
+    }
+
+    public String getType() {
+        return itemType;
+    }
+
+    public void setType(String itemType) {
+        this.itemType = itemType;
     }
 
     public String getName() {
@@ -54,6 +66,14 @@ public abstract class Item {
 
     public int getModifier() {
         return modifier;
+    }
+
+    public void useItem(){
+        this.quantity = quantity-1;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getDescription() {

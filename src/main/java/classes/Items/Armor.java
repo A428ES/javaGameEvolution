@@ -5,6 +5,8 @@ import interfaces.StateManagement;
 
 public class Armor extends Item {
     public Armor() {
+        super();
+        this.setType("ARMOR");
     }
 
     public void adjustModifier(){

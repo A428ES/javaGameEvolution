@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import interfaces.StateManagement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Inventory {
     @JsonProperty("activeWeapon")
@@ -29,9 +30,16 @@ public class Inventory {
 
     public Item getItem(String itemId){
         return inventory.stream()
-                .filter(item -> item.getName().equalsIgnoreCase(activeWeaponId))
+                .filter(item -> item.getName().equalsIgnoreCase(itemId))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Item not found: " + activeWeaponId));
+                .orElseThrow(() -> new RuntimeException("Item not found: " + itemId));
+    }
+
+    public List<Item> medicineList() {
+        return inventory.stream()
+                .filter(item -> item.getType() != null && item.getType().equalsIgnoreCase("MEDICINE")
+                && item.getQuantity() > 0)
+                .collect(Collectors.toList());
     }
 
     @JsonIgnore

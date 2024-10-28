@@ -57,6 +57,10 @@ public abstract class Entity extends StatefulObject {
         health = health - damage;
     }
 
+    public void increaseHealth(int increase){
+        health = health + increase;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }

@@ -6,6 +6,8 @@ import interfaces.StateManagement;
 public class Medicine extends Item {
 
     public Medicine() {
+        super();
+        this.setType("MEDICINE");
     }
 
     public void adjustModifier(){

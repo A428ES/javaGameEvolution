@@ -98,9 +98,16 @@ public class BattleSupport {
             outputWeaponNamesAttack(eventTarget, eventAttacker);
             eventTarget.takeDamage(damageOutcome);
             outputDamageCalculation(eventTarget.getName(), damageOutcome);
+            healthAssess();
         } else {
             outputManager.display(eventTarget.getName() + " DODGED THE ATTACK");
         }
+
+        eventTarget.write();
+    }
+
+    public void healthAssess(){
+        outputManager.display(String.format("%s HEALTH: %s\n%S HEALTH: %s", player.getName(), player.getHealth(), target.getName(), target.getHealth()));
     }
 
     public void removeNpc(){

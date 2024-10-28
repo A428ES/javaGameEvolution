@@ -5,6 +5,8 @@ import interfaces.StateManagement;
 
 public class Weapon extends Item {
     public Weapon() {
+        super();
+        this.setType("WEAPON");
     }
 
     public void adjustCondition(){

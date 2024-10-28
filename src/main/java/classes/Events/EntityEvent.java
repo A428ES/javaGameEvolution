@@ -3,15 +3,12 @@ package classes.Events;
 import abstracted.Enum.BattleChoices;
 import abstracted.GameTypes.Entity;
 import abstracted.GameTypes.Event;
-import abstracted.GameTypes.Item;
 import abstracted.GameTypes.Location;
 import classes.BattleSupport;
 import classes.EventInstructions;
 import classes.GameEntity.Player;
-import exception.InvalidChoiceException;
+import classes.ItemSupporter;
 import interfaces.StateManagement;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 import static abstracted.Enum.StatefulObjectTypes.*;
 import static java.lang.Math.round;
@@ -21,6 +18,7 @@ public class EntityEvent extends Event {
     private Entity target;
     private Player player;
     private Location location;
+    BattleSupport battleHandler;
 
     @Override
     public void setLocation(Location location) {
@@ -61,7 +59,10 @@ public class EntityEvent extends Event {
 
     public EventInstructions eventOutcome() {
         outputEventFeed(formatEventText());
-        BattleSupport battleHandler = new BattleSupport(getOutputManager(), player, target, location);
+
+        if(battleHandler == null){
+            battleHandler = new BattleSupport(getOutputManager(), player, target, location);
+        }
 
         do{
             setInputPayload();
@@ -74,11 +75,21 @@ public class EntityEvent extends Event {
                         getOutputManager().display("YOU CANNOT BATTLE WITH NO HEALTH!");
                     }
                     break;
+                case MEDICINE:
+                    if(player.getHealth() < 1000){
+                        ItemSupporter itemSupport = new ItemSupporter();
+                        itemSupport.listMedicine(player);
+
+                        promptAndSetInput("SELECT MEDICINE");
+
+                        itemSupport.useMedicine(player, inputPayload);
+                    }
                 case ESCAPE:
+                    getOutputManager().display("YOU RAN AWAY!");
                     player.setInBattle(false);
                     break;
                 default:
-                    throw new InvalidChoiceException("tst");
+                    return eventOutcome();
             }
         } while(player.isInBattle());
 
